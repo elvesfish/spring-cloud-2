@@ -1,0 +1,23 @@
+#bootstrap.yml配置文件优化于application.yml
+server:
+  port: 8082
+spring:
+  application:
+    name: ms-client1
+  cloud:
+    config:
+      name: ms-client1
+      profile: prod
+      label: master
+#      uri: http://localhost:8888/    #uri的方式
+      discovery:                    #服务发现方式
+        enabled: true
+        service-id: config-server
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+

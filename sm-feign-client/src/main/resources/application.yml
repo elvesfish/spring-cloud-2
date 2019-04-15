@@ -1,0 +1,42 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: ms-feign-client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+# feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 7000
+        readTimeout: 7000
+  hystrix:
+    enabled: true #开启Feign的熔断功能(默认情况下是关闭的)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8000 # 设置hystrix的超时时间为8000ms
+#spring:
+#  cloud:
+#    loadbalancer:
+#      retry:
+#        enabled: true # 开启Spring Cloud的重试功能
+#service:  #负载均衡规则的配置
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule  #规则:随机________默认:轮循
+#    ConnectTimeout: 250 # Ribbon的连接超时时间
+#    ReadTimeout: 1000 # Ribbon的数据读取超时时间
+#    OkToRetryOnAllOperations: true # 是否对所有操作都进行重试
+#    MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+#    MaxAutoRetries: 1 # 对当前实例的重试次数
+
+
