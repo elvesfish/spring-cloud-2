@@ -14,6 +14,7 @@
         <module>eureka-server</module>
         <module>eureka-server-2</module>
         <module>config-server</module>
+        <module>config-server-bus</module>
         <module>ms-client1</module>
         <module>sm-feign-client</module>
     </modules>

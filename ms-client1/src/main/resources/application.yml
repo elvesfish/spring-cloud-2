@@ -4,12 +4,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
-# 手动刷新配置信息
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*" #暴露所有端点 默认是info,health
 #shutdown端点可以用来远程关闭应用，此端点默认是关闭的，如果使用的话，需要开启，使用以下属性
 #你就可以在应用启动后远程通过调用/actuator/shutdown来关闭应用，注意只能POST请求调用。
 #  endpoint:

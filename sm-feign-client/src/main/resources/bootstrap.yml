@@ -1,12 +1,12 @@
 #bootstrap.yml配置文件优化于application.yml
 server:
-  port: 8082
+  port: 8083
 spring:
   application:
-    name: ms-client1
+    name: ms-feign-client
   cloud:
     config:
-      name: ms-client1
+      name: ms-feign-client
       profile: prod
       label: master
 #      uri: http://localhost:8888/    #uri的方式

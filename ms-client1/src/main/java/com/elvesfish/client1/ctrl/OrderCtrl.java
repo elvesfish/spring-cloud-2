@@ -1,5 +1,6 @@
 package com.elvesfish.client1.ctrl;
 
+import com.elvesfish.client1.bean.OrderVo;
 import com.elvesfish.client1.common.ResultInfo;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,10 @@ public class OrderCtrl {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        return new ResultInfo(ResultInfo.SUCCESS_CODE, "client Order ");
+        OrderVo orderVo = new OrderVo();
+        orderVo.setOrderId("1");
+        orderVo.setOrderName("产品信息");
+        orderVo.setOrderType("2");
+        return new ResultInfo(ResultInfo.SUCCESS_CODE, "client Order ", orderVo);
     }
 }
