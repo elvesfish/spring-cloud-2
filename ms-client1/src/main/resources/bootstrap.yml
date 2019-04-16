@@ -23,7 +23,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: bus-refresh,refresh #暴露所有端点 默认是info,health
+        include: "*" #暴露所有端点 默认是info,health
 
 
 

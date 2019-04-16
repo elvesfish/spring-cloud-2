@@ -17,6 +17,7 @@
         <module>config-server-bus</module>
         <module>ms-client1</module>
         <module>sm-feign-client</module>
+        <module>server-admin</module>
     </modules>
 
     <properties>

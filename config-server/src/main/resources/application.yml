@@ -18,6 +18,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true #是否显示IP
 
 
 
