@@ -5,8 +5,26 @@ eureka:
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true #是否显示IP
+    metadata-map:
+      cluster: consumers  #对应聚合涡轮监控--类似集群
 #shutdown端点可以用来远程关闭应用，此端点默认是关闭的，如果使用的话，需要开启，使用以下属性
 #你就可以在应用启动后远程通过调用/actuator/shutdown来关闭应用，注意只能POST请求调用。
 #  endpoint:
 #    shutdown:
 #      enabled: true
+# feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 7000
+        readTimeout: 7000
+  hystrix:
+    enabled: true #开启Feign的熔断功能(默认情况下是关闭的)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8000 # 设置hystrix的超时时间为8000ms

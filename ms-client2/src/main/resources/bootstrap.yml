@@ -1,0 +1,18 @@
+#bootstrap.yml配置文件优化于application.yml
+server:
+  port: 8084
+spring:
+  application:
+    name: ms-client2
+  cloud:
+    config:
+      name: ms-client2
+      profile: prod
+      label: master
+#      uri: http://localhost:8888/    #uri的方式
+      discovery:                    #服务发现方式
+        enabled: true
+        service-id: config-server
+
+
+

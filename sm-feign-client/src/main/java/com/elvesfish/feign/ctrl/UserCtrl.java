@@ -1,8 +1,10 @@
 package com.elvesfish.feign.ctrl;
 
 import com.alibaba.fastjson.JSON;
+import com.elvesfish.feign.bean.GoodVo;
 import com.elvesfish.feign.bean.OrderVo;
 import com.elvesfish.feign.common.ResultInfo;
+import com.elvesfish.feign.service.IGoodService;
 import com.elvesfish.feign.service.IOrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class UserCtrl {
 
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private IGoodService goodService;
 
     @GetMapping("/list")
     public String selectUser() {
@@ -46,7 +50,19 @@ public class UserCtrl {
             OrderVo orderVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), OrderVo.class);
             log.info(orderVo.toString());
         } else {
-            log.info(resultInfo.getMessage());
+            log.info("降级处理成功:" + resultInfo.getMessage());
+        }
+        return resultInfo;
+    }
+
+    @GetMapping("/good")
+    public ResultInfo selectGood() {
+        ResultInfo resultInfo = goodService.getGoodOne();
+        if (ResultInfo.SUCCESS_CODE.equals(resultInfo.getCode())) {
+            GoodVo goodVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), GoodVo.class);
+            log.info(goodVo.toString());
+        } else {
+            log.info("降级处理成功:" + resultInfo.getMessage());
         }
         return resultInfo;
     }
@@ -56,5 +72,6 @@ public class UserCtrl {
         log.info("customerName:" + customerName);
         return new ResultInfo(ResultInfo.SUCCESS_CODE, "返回配置中心文件的值", customerName);
     }
+
 
 }
