@@ -45,6 +45,7 @@ public class OrderCtrl {
      */
     @GetMapping("/good")
     public ResultInfo selectOrderGoodInfo(@RequestParam("goodId") String goodId) {
+//        accessTimeOut(6000L);
         ResultInfo resultInfo = goodService.getGoodById(goodId);
         if (ResultInfo.SUCCESS_CODE.equals(resultInfo.getCode())) {
             GoodVo goodVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), GoodVo.class);
@@ -53,6 +54,14 @@ public class OrderCtrl {
             log.info("降级处理成功:" + resultInfo.getMessage());
         }
         return resultInfo;
+    }
+
+    private void accessTimeOut(Long timeOut) {
+        try {
+            Thread.sleep(timeOut);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+        }
     }
 
 

@@ -15,11 +15,13 @@
         <module>eureka-server-2</module>
         <module>config-server</module>
         <module>config-server-bus</module>
+        <module>zuul-server</module>
         <module>ms-client1</module>
         <module>ms-client2</module>
         <module>sm-feign-client</module>
         <module>server-admin</module>
         <module>hystrix-dashboard</module>
+        <module>sleuth-client1</module>
     </modules>
 
     <parent>

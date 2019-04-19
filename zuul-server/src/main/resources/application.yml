@@ -1,0 +1,39 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: zuul-server
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true #是否显示IP
+zuul:
+  routes:
+    api-client1:
+      path: /api-client1/**
+      serviceId: ms-client1
+    api-client2:
+      path: /api-client2/**
+      serviceId: ms-client2
+ribbon:
+  ReadTimeout: 6000
+  ConnectTimeout: 6000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  NFLoadBalancerPingInterval: 1
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000 # 设置hystrix的超时时间为8000ms
+

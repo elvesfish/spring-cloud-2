@@ -17,7 +17,7 @@ public class GoodCtrl {
 
     @GetMapping("/one")
     public ResultInfo getOne(@RequestParam(value = "goodId") String goodId) {
-        accessTimeOut();
+//        accessTimeOut();
         //db查询
         GoodVo goodVo = new GoodVo();
         goodVo.setGoodId("g" + goodId);

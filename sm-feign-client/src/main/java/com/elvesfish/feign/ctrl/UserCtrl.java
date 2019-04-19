@@ -13,6 +13,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,12 @@ public class UserCtrl {
     private IOrderService orderService;
     @Autowired
     private IGoodService goodService;
+
+    @GetMapping("/test")
+    public ResultInfo selectLocalName() {
+        log.info("local host: test");
+        return new ResultInfo(ResultInfo.SUCCESS_CODE, "本地信息");
+    }
 
     @GetMapping("/list")
     public String selectUser() {
@@ -56,8 +63,8 @@ public class UserCtrl {
     }
 
     @GetMapping("/good")
-    public ResultInfo selectGood() {
-        ResultInfo resultInfo = goodService.getGoodOne();
+    public ResultInfo selectGood(@RequestParam("goodId") String goodId) {
+        ResultInfo resultInfo = goodService.getGoodOne(goodId);
         if (ResultInfo.SUCCESS_CODE.equals(resultInfo.getCode())) {
             GoodVo goodVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), GoodVo.class);
             log.info(goodVo.toString());

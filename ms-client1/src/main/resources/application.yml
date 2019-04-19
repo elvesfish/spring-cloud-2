@@ -28,3 +28,10 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 8000 # 设置hystrix的超时时间为8000ms
+#zipkin
+spring:
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0

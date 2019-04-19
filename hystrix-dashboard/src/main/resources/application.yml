@@ -13,7 +13,7 @@ eureka:
 #聚合监控
 turbine:
   aggregator:
-    clusterConfig: producer,consumers            #指定聚合哪些集群,多个使用","分割，默认为default
-  appConfig: ms-feign-client                 #配置监控服务的列表，表明监控哪些服务多个使用","分割.ms-client1
+    clusterConfig: producer,consumers    #指定聚合哪些集群,多个使用","分割，默认为default
+  appConfig: ms-feign-client,ms-client1   #配置监控服务的列表，表明监控哪些服务多个使用","分割.ms-client1
 #  clusterNameExpression: new String("default")
   clusterNameExpression: metadata['cluster']

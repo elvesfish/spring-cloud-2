@@ -7,11 +7,12 @@ import com.elvesfish.feign.service.impl.OrderFallBack;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "ms-client2", configuration = MFeignConfig.class, fallback = GoodFallBack.class)
 public interface IGoodService {
 
     @GetMapping("/good/one")
-    ResultInfo getGoodOne();
+    ResultInfo getGoodOne(@RequestParam("goodId") String goodId);
 
 }
