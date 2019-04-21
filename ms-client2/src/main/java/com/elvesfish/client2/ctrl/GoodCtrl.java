@@ -24,6 +24,7 @@ public class GoodCtrl {
         goodVo.setGoodName("商品名称" + goodId);
         goodVo.setGoodType("1");
         goodVo.setGoodImage("/image/1001.png");
+        log.info("商品信息成功");
         return new ResultInfo(ResultInfo.SUCCESS_CODE, "获取一个商品信息", goodVo);
     }
 
