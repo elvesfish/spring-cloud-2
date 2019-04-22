@@ -1,6 +1,8 @@
 #bootstrap.yml配置文件优化于application.yml
 server:
   port: 8084
+#  servlet:
+#    context-path: /good-info
 spring:
   application:
     name: ms-client2

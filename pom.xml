@@ -16,6 +16,7 @@
         <module>config-server</module>
         <module>config-server-bus</module>
         <module>zuul-server</module>
+        <module>gateway-server</module>
         <module>ms-client1</module>
         <module>ms-client2</module>
         <module>sm-feign-client</module>

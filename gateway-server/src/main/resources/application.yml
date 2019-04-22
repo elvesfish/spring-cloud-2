@@ -1,0 +1,60 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: gateway-server
+  profiles:
+    active: ratelimit
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      #zipkin客户端发送消息的方式，http的方式(如果有spring-cloud-starter-bus-amqp组件,那么采用的是rabbitmq方式)
+      type: web
+  sleuth:
+    sampler:
+      #收集追踪信息的比率，如果是0.1则表示只记录10%的追踪数据，如果要全部追踪，设置为1（实际场景不推荐，因为会造成不小的性能消耗）
+      probability: 1.0
+  cloud:
+    gateway:
+      #跨域
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "http://docs.spring.io"
+#            allowedMethods:
+#            - GET
+#            - POST
+#            - PUT
+#            - DELETE
+#      discovery:
+#        locator:
+#          enabled: true
+      routes:
+      - id: app-client1-route
+        uri: lb://ms-client1
+        predicates:
+        - Path=/api-client1/**
+        filters:
+        #转发请求时去掉1级前缀
+        - StripPrefix=1
+      - id: app-client2-route
+        uri: lb://ms-client2
+        predicates:
+        - Path=/api-client2/**
+        filters:
+        #转发请求时去掉1级前缀
+        - StripPrefix=1
+eureka:
+  client:
+    #eureka client刷新本地缓存时间，默认30
+    registry-fetch-interval-seconds: 10
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    #是否显示IP
+    prefer-ip-address: true
+    #Eureka客户端向服务端发送心跳的时间间隔，单位为秒（客户端告诉服务端自己会按照该规则），默认30
+    lease-renewal-interval-in-seconds: 10
+    #Eureka服务端在收到最后一次心跳之后等待的时间上限，单位为秒，超过则剔除（客户端告诉服务端按照此规则等待自己），默认90
+    lease-expiration-duration-in-seconds: 12
