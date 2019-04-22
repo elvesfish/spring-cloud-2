@@ -32,8 +32,8 @@ hystrix:
 spring:
   zipkin:
     base-url: http://localhost:9411
-    sender:
-      type: web #zipkin客户端发送消息的方式，必须有
+#    sender:
+#      type: web #zipkin客户端发送消息的方式，必须有
   sleuth:
     sampler:
       probability: 1.0 #收集追踪信息的比率，如果是0.1则表示只记录10%的追踪数据，如果要全部追踪，设置为1（实际场景不推荐，因为会造成不小的性能消耗）

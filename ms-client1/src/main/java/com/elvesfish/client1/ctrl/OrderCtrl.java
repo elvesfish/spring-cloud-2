@@ -2,9 +2,12 @@ package com.elvesfish.client1.ctrl;
 
 import com.alibaba.fastjson.JSON;
 import com.elvesfish.client1.bean.GoodVo;
+import com.elvesfish.client1.bean.LogisticsVo;
+import com.elvesfish.client1.bean.OrderInfoVo;
 import com.elvesfish.client1.bean.OrderVo;
 import com.elvesfish.client1.common.ResultInfo;
 import com.elvesfish.client1.service.IGoodService;
+import com.elvesfish.client1.service.ILogisticsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,8 @@ public class OrderCtrl {
 
     @Autowired
     private IGoodService goodService;
+    @Autowired
+    private ILogisticsService logisticsService;
 
     @GetMapping("/list")
     public ResultInfo selectOrderList() {
@@ -39,6 +44,8 @@ public class OrderCtrl {
 
     /**
      * 订单获取商品信息
+     * 调用商品服务
+     * 调用物流服务
      *
      * @param goodId
      * @return
@@ -47,13 +54,29 @@ public class OrderCtrl {
     public ResultInfo selectOrderGoodInfo(@RequestParam("goodId") String goodId) {
 //        accessTimeOut(6000L);
         ResultInfo resultInfo = goodService.getGoodById(goodId);
+        GoodVo goodVo;
         if (ResultInfo.SUCCESS_CODE.equals(resultInfo.getCode())) {
-            GoodVo goodVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), GoodVo.class);
+            goodVo = JSON.parseObject(JSON.toJSONString(resultInfo.getData()), GoodVo.class);
             log.info(goodVo.toString());
         } else {
-            log.info("降级处理成功:" + resultInfo.getMessage());
+            log.info("[商品服务]降级处理成功:" + resultInfo.getMessage());
+            goodVo = (GoodVo) resultInfo.getData();
         }
-        return resultInfo;
+
+        ResultInfo logisticsById = logisticsService.getLogisticsById(goodId);
+        LogisticsVo logisticsVo;
+        if (ResultInfo.SUCCESS_CODE.equals(logisticsById.getCode())) {
+            logisticsVo = JSON.parseObject(JSON.toJSONString(logisticsById.getData()), LogisticsVo.class);
+            log.info(logisticsVo.toString());
+        } else {
+            log.info("[物流服务]降级处理成功:" + logisticsById.getMessage());
+            logisticsVo = (LogisticsVo) logisticsById.getData();
+        }
+
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setGoodVo(goodVo);
+        orderInfoVo.setLogisticsVo(logisticsVo);
+        return new ResultInfo(ResultInfo.SUCCESS_CODE, "订单获取商品信息", orderInfoVo);
     }
 
     private void accessTimeOut(Long timeOut) {

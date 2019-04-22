@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author: elvesfish
- * @date: 2019/4/19
+ *  物流服务
+ * @author elvesfish
+ * @date 2019/4/19
  */
 @RestController
 @RequestMapping("/logistics")
@@ -27,6 +28,7 @@ public class LogisticsCtrl {
         logisticsVo.setLogisticsName("物流名称" + logisticsId);
         logisticsVo.setLogisticsType("1");
         logisticsVo.setLogisticsAddress("小区" + logisticsId);
+        log.info(logisticsVo.toString());
         return new ResultInfo(ResultInfo.SUCCESS_CODE, "获取一个物流信息", logisticsVo);
     }
 }
