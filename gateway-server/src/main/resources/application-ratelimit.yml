@@ -15,6 +15,8 @@ spring:
   redis:
     host: localhost
     port: 6379
+    password:
+    database: 1
   cloud:
     gateway:
       #跨域
@@ -38,6 +40,11 @@ spring:
         filters:
         #转发请求时去掉1级前缀
         - StripPrefix=1
+        # 熔断降级配置
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: 'forward:/fallback'
         #请求限流
         - name: RequestRateLimiter
           args:
@@ -46,7 +53,8 @@ spring:
             #令牌桶的容量，允许在一秒钟内完成的最大请求数
             redis-rate-limiter.burstCapacity: 20
             #使用SpEL按名称引用bean
-            key-resolver: "#{@ipKeyResolver}"
+#            key-resolver: "#{@ipKeyResolver}"
+            key-resolver: "#{@apiKeyResolver}"
       - id: app-client2-route
         uri: lb://ms-client2
         predicates:
@@ -68,3 +76,13 @@ eureka:
     lease-renewal-interval-in-seconds: 10
     #Eureka服务端在收到最后一次心跳之后等待的时间上限，单位为秒，超过则剔除（客户端告诉服务端按照此规则等待自己），默认90
     lease-expiration-duration-in-seconds: 12
+# hystrix 信号量隔离，3秒后自动超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 3000
+  shareSecurityContext: true

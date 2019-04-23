@@ -28,7 +28,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-		<!--基于 reactive stream 的redis -->
+		<!-- 熔断、降级 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+		<!--限流 reactive stream 的redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
@@ -41,6 +46,12 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<!--json 工具-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.44</version>
 		</dependency>
 
 		<dependency>
