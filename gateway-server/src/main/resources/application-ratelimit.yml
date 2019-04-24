@@ -55,6 +55,24 @@ spring:
             #使用SpEL按名称引用bean
 #            key-resolver: "#{@ipKeyResolver}"
             key-resolver: "#{@apiKeyResolver}"
+        #重试过滤器
+        - name: Retry
+          args:
+            #用来标识重试次数,默认3
+            retries: 3
+            series:
+            - SERVER_ERROR
+            #重试response code的系列，100（info），200（success），300（redirect），400（client error），500（server error），默认500
+            statuses:
+            - OK
+#            - INTERNAL_SERVER_ERROR
+#            - BAD_GATEWAY
+            method: GET #重试的request请求，默认GET
+        #自定义JWT检查过滤器
+        - name: JwtCheck
+          args:
+            status: 200
+            url: localhost
       - id: app-client2-route
         uri: lb://ms-client2
         predicates:

@@ -58,10 +58,14 @@ eureka:
     lease-renewal-interval-in-seconds: 10
     #Eureka服务端在收到最后一次心跳之后等待的时间上限，单位为秒，超过则剔除（客户端告诉服务端按照此规则等待自己），默认90
     lease-expiration-duration-in-seconds: 12
-#logging:
-#  level:
-#    root: debug
-#    com.elvesfish: warn
+#打印日志级别
+logging:
+  level:
+    root: info
+    com.elvesfish: warn
+    org.springframework.cloud.gateway.filter.factory: trace #调试打印重试信息
+    org.springframework.http.server.reactive: debug
+    org.springframework.cloud.gateway.filter.ratelimit: debug #调试打印限流信息
 #自定义过滤器
 config:
   filter:
