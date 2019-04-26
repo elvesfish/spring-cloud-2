@@ -64,9 +64,9 @@ spring:
             - SERVER_ERROR
             #重试response code的系列，100（info），200（success），300（redirect），400（client error），500（server error），默认500
             statuses:
-            - OK
-#            - INTERNAL_SERVER_ERROR
-#            - BAD_GATEWAY
+#            - OK
+            - INTERNAL_SERVER_ERROR
+            - BAD_GATEWAY
             method: GET #重试的request请求，默认GET
         #自定义JWT检查过滤器
         - name: JwtCheck

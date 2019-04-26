@@ -9,11 +9,14 @@ import com.elvesfish.client1.common.ResultInfo;
 import com.elvesfish.client1.service.IGoodService;
 import com.elvesfish.client1.service.ILogisticsService;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +45,24 @@ public class OrderCtrl {
         return new ResultInfo(ResultInfo.SUCCESS_CODE, "client Order ", orderVo);
     }
 
+    AtomicInteger ac = new AtomicInteger();
+
+    /**
+     * 测试重试接口
+     *
+     * @param name
+     * @return
+     */
+    @GetMapping("/data")
+    public ResultInfo getData(@RequestParam("name") String name) {
+        if (StringUtils.isBlank(name)) {
+            log.info("被调用的次数:" + ac.addAndGet(1));
+            throw new RuntimeException("error");
+        }
+        return new ResultInfo(ResultInfo.SUCCESS_CODE, "测试重试数据成功");
+    }
+
+
     /**
      * 订单获取商品信息
      * 调用商品服务
@@ -52,7 +73,7 @@ public class OrderCtrl {
      */
     @GetMapping("/good")
     public ResultInfo selectOrderGoodInfo(@RequestParam("goodId") String goodId) {
-//        accessTimeOut(6000L);
+//        accessTimeOut(3000L);
         ResultInfo resultInfo = goodService.getGoodById(goodId);
         GoodVo goodVo;
         if (ResultInfo.SUCCESS_CODE.equals(resultInfo.getCode())) {
