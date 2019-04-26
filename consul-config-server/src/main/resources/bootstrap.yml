@@ -1,0 +1,30 @@
+#bootstrap.yml配置文件优化于application.yml
+server:
+  port: 8090
+spring:
+  application:
+    name: consul-config-server
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        health-check-interval: 5s
+      config:
+        enabled: true
+        format:
+        - YAML
+        #指定consul配置的文件夹前缀为config
+        prefix: config
+        #指定consul配置的配置文件父路径
+        default-context: consul-config-server
+        #表示consul上面的KEY值(或者说文件的名字) 默认是data
+        data-key: data
+        #指定consul配置的配置文件格式properties（maven），gradle为（YAML）
+#        profile-separator: ','
+#        name: ${spring.application.name}
+
+
+

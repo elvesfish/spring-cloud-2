@@ -1,0 +1,37 @@
+server:
+  port: 8503
+spring:
+  application:
+    name: consul-consumer
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        health-check-interval: 5s
+        hostname: consul-consumer
+        heartbeat:
+          enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #暴露所有端点 默认是info,health
+# feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 7000
+        readTimeout: 7000
+  hystrix:
+    enabled: true #开启Feign的熔断功能(默认情况下是关闭的)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8000 # 设置hystrix的超时时间为8000ms

@@ -1,19 +1,24 @@
-server:
-  port: 8501
-spring:
-  application:
-    name: consul-producer
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        prefer-ip-address: true
-        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        health-check-interval: 5s
-        hostname: consul-producer
-        heartbeat:
-          enabled: true
+#server:
+#  port: 8501
+#spring:
+#  application:
+#    name: consul-producer
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        prefer-ip-address: true
+#        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+#        health-check-interval: 5s
+#        hostname: consul-producer
+#        heartbeat:
+#          enabled: true
+#      config:
+#        format: YAML
+#        name: consul-config-server
+#        enabled: true
+
 management:
   endpoints:
     web:

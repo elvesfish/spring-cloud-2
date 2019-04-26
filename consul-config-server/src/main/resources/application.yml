@@ -1,0 +1,18 @@
+server:
+  port: 8600
+spring:
+  application:
+    name: consul-config-server
+#端点开放
+management:
+  endpoints:
+    web:
+      exposure:
+        #暴露所有端点 默认是info,health
+        include: "*"
+my:
+  prop: this default
+
+
+
+
