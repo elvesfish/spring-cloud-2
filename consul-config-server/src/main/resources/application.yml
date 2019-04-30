@@ -1,5 +1,5 @@
 server:
-  port: 8600
+  port: 8090
 spring:
   application:
     name: consul-config-server
@@ -10,8 +10,8 @@ management:
       exposure:
         #暴露所有端点 默认是info,health
         include: "*"
-my:
-  prop: this default
+#my:
+#  prop: this default
 
 
 
